@@ -1,0 +1,55 @@
+class Solution:
+    #@param A: An list of list integer 
+    #@return: The index of position is a list of integer, for example [2,2]
+    def findPeakII(self, A):
+        # write your code here
+        
+        u = 0;
+        d = len(A) - 1;
+        l = 0;
+        r = len(A[0]) - 1;
+        
+        while u < d - 1 or l < r - 1:
+            if d - u > r - l:
+                mr = (u + d) // 2;
+                mc = self.isRowPeak(A, l, r, mr);
+                if self.isPeak(A, mr, mc):
+                    return [mr, mc];
+                elif A[mr][mc] < A[mr - 1][mc]:
+                    d = mr;
+                else:
+                    u = mr;
+            else:
+                mc = (l + r) // 2;
+                mr = self.isColPeak(A, u, d, mc);
+                if self.isPeak(A, mr, mc):
+                    return [mr, mc];
+                elif A[mr][mc] < A[mr][mc - 1]:
+                    r = mc;
+                else:
+                    l = mc;                
+                
+                
+        for x in range(u, d + 1):
+            for y in range(l, r + 1):
+                if self.isPeak(A, x, y):
+                    return [x, y];
+            
+        return [-1, -1];
+            
+            
+    def isRowPeak(self, A, l, r, mr):
+        x = max(A[mr][y] for y in range(l, r + 1));
+        for y in range(l, r + 1):
+            if x == A[mr][y]:
+                return y;
+                
+    def isColPeak(self, A, u, d, mc):
+        x = max(A[y][mc] for y in range(u, d + 1));
+        for y in range(u, d + 1):
+            if x == A[y][mc]:
+                return y;
+                
+    def isPeak(self, A, mr, mc):
+        if A[mr][mc] > max(A[mr - 1][mc], A[mr + 1][mc], A[mr][mc - 1], A[mr][mc + 1]):
+            return True;
