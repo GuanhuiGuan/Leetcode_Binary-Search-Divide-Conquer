@@ -1,0 +1,28 @@
+class Solution:
+    """
+    @param: x: a double
+    @return: the square root of x
+    """
+    def sqrt(self, x):
+        # write your code here
+        if x == 0 or x == 1:
+            return x;
+            
+        lo = 0.0;
+        hi = x;
+        e = 1e-12
+        if x < 1:
+            hi = 1;
+        
+        while lo < hi - e:
+            y = (lo + hi) / 2.0;
+
+            if y * y <= x:
+                lo = y;
+            else:
+                hi = y;
+   
+        if abs(x - hi * hi) <= e:
+            return hi;
+        else:
+            return lo;
