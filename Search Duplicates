@@ -1,0 +1,52 @@
+class Solution:
+    """
+    @param: nums: an array containing n + 1 integers which is between 1 and n
+    @return: the duplicate one
+    """
+    
+    #Binary Search Method
+    
+    def findDuplicate(self, nums):
+        # write your code here
+        start = 1;
+        end  = len(nums) - 1;
+        while start < end - 1:
+            mid = (start + end) // 2;
+            if self.checkLess(mid, nums) <= mid:
+                start = mid;
+            else:
+                end = mid;
+                
+        if self.checkLess(start, nums) <= start:
+            return end;
+        else:
+            return start;
+            
+        
+    def checkLess(self, mid, nums):
+        c = 0;
+        for item in nums:
+            if item <= mid:
+                c += 1;
+        return c;
+        
+        
+        #Projection Method; Still Learning
+
+    def findDuplicate(self, nums):
+        # Write your code here
+        if len(nums) <= 1:
+            return -1
+
+        slow = nums[0]
+        fast = nums[nums[0]]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+        fast = 0;
+        while fast != slow:
+            fast = nums[fast]
+            slow = nums[slow]
+        
+        return slow
