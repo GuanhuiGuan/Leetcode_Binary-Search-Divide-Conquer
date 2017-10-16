@@ -1,0 +1,35 @@
+class Solution:
+    """
+    @param: A: An integer array
+    @param: queries: The query list
+    @return: The number of element in the array that are smaller that the given integer
+    """
+    def countOfSmallerNumber(self, A, queries):
+        # write your code here
+        A.sort();
+        re = [];
+        for query in queries:
+            re.append(self.BinarySearch(A, query));
+        
+        return re;
+        
+        
+    def BinarySearch(self, A, query):
+        if len(A) == 0 or A[-1] < query:
+            return len(A);
+            
+        start, end = 0, len(A) - 1;
+        
+        while start + 1 < end:
+            mid = (start + end) / 2;
+            if A[mid] >= query:   # Where is the equation put is essential
+                end = mid;
+            else:
+                start = mid;
+                
+        if A[start] >= query:
+            return start;
+        if A[end] >= query:
+            return end;
+        else:
+            return end + 1;
