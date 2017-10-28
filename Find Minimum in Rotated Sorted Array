@@ -1,0 +1,21 @@
+class Solution {
+    public int findMin(int[] nums) {
+        int n = nums.length;
+        if(n < 1){return 0;}
+        int start = 0;
+        int end = n - 1;
+        int Min;
+        while(start < end)
+        {
+            if(nums[start] < nums[end])//if it's not the min, one at the end will be smaller than the start
+            {return nums[start];}
+            else
+            {
+                int mid = (start + end) / 2;
+                if(nums[start] <= nums[mid]){start = mid + 1;}//slightly rotated->min in the rear->it cannot be mid and thus we can set +1
+                else{end = mid;}//heavily rotated->min in the front
+            }
+        }
+        return nums[start];
+    }
+};
