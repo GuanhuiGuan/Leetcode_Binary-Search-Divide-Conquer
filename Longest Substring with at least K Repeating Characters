@@ -1,0 +1,29 @@
+class Solution {
+    public int longestSubstring(String s, int k) {
+        return divideConquer(s, 0, s.length(), k);
+        
+        
+    }
+    
+    public int divideConquer(String s, int start, int end, int k){
+        if(end - start < k) return 0;
+        // alphabet
+        int[] alpha = new int[26];
+        for(int i = start; i < end; i++){
+            alpha[s.charAt(i) - 'a']++;
+        }
+        for(int j = 0; j < alpha.length; j++){
+            // if the letter doesn't have correct quantity
+            if(alpha[j] > 0 && alpha[j] < k){
+                // find first appearance of the letter in the substring
+                // split at that point since the substring we want should be either before or after the letter
+                for(int t = start; t < end; t++){
+                    if(s.charAt(t) == 'a' + j){
+                        return Math.max(divideConquer(s, start, t, k), divideConquer(s, t+1, end, k));
+                    }
+                }
+            }
+        }
+        return end - start;
+    }
+}
