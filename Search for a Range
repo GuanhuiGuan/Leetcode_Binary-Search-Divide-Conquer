@@ -1,0 +1,23 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int n = nums.length;
+        int start = 0;
+        int end = n-1;
+        int front = -1;
+        int rear = -1;
+        while(start <= end){
+            int mid = (start + end)/2;
+            if(nums[mid] == target){
+                front = mid;
+                rear = mid;
+                while(front - 1 >= 0 && nums[front-1] == target)   front--;
+                while(rear + 1 < n && nums[rear+1] == target)  rear++;
+                break;
+            }
+            else if(nums[mid] > target) end = mid - 1;
+            else    start = mid + 1;
+        }
+        int[] out = {front, rear};
+        return out;
+    }
+}
