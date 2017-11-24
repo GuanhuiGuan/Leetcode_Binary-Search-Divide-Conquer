@@ -21,3 +21,31 @@ class Solution {
         return out;
     }
 }
+
+//Iteration, strict O(logn)
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] result = {nums.length, -1};
+        bS(target, nums, result, 0, nums.length-1);
+        if(result[0] > result[1])   result[0] = -1;
+        return result;
+    }
+    
+    public void bS(int target, int[] nums, int[] result, int start, int end){
+        if(start > end) return;
+        int mid = (start + end)/2;
+        if(nums[mid] == target){
+            // both will be executed if condition matches
+            if(mid < result[0]){
+                result[0] = mid;
+                bS(target, nums, result, start, mid-1);
+            }
+            if(mid > result[1]){
+                result[1] = mid;
+                bS(target, nums, result, mid+1, end);
+            }
+        }
+        else if(target < nums[mid]) bS(target, nums, result, start, mid-1);
+        else    bS(target, nums, result, mid+1, end);
+    }
+}
