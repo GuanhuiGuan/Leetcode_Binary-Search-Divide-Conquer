@@ -1,0 +1,28 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    // sum from rightmost to leftmost
+    int sum = 0;
+    
+    public TreeNode convertBST(TreeNode root) {
+        invInorder(root);
+        return root;
+    }
+    
+    // for BST, left <= root <= right
+    // inverse inorder walk and sum up
+    public void invInorder(TreeNode node){
+        if(node == null)  return;
+        invInorder(node.right);
+        node.val += sum;
+        sum = node.val;
+        invInorder(node.left);
+    }
+}
